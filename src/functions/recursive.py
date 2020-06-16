@@ -31,48 +31,39 @@ def minsum(vec):
       result = i
   return result
 
-def Min_Matching(A, B, i = 0, j = 0):
-  if i == len(A) and j == len(B):
-    return []
-  elif i == len(A) or j == len(B):
-    return None
-  elif i == len(A)-1 and j == len(B)-1:
-    return [(A[i], B[i])]
-  elif i == len(A)-1 or j == len(B)-1:
-    if i == len(A)-1:
-      this = (A[i], [])
-      for it in range(j, len(B)):
-        this[1].append(B[it])
-      return [this]
+def Min_Matching_Recursive(A, B):
+  i = len(A)-1
+  j = len(B)-1
+  if i == 0 and j == 0:
+    return [(A[i], B[j])]
+  elif i == 0 or j == 0:
+    if i == 0:
+      match = (A[i], [])
+      for it in range(j+1):
+        match[1].append(B[it])
+      return [match]
     else:
-      this = ([], B[j])
-      for it in range(i, len(A)):
-        this[0].append(A[it])
-      return [this]
+      match = ([], B[j])
+      for it in range(i+1):
+        match[0].append(A[it])
+      return [match]
   else:
     pesos = []
-    match = Min_Matching(A, B, i+1, j+1)
-    if match is not None:
-      match.insert(0, (A[i], B[j]))
-      pesos.append(match)
-    temp = i+1
-    while temp < (len(A)-1):
-      this = ([], B[j])
-      for it in range(i, temp):
-        this[0].append(A[it])
-      temp2 = Min_Matching(A, B, temp, j+1)
-      if temp2 is not None:
-        temp2.insert(0, this)
-        pesos.append(temp2)
-      temp += 1
-    temp = j+1
-    while temp < (len(B)-1):
-      this = (A[i], [])
-      for it in range(j, temp):
-        this[1].append(B[it])
-      temp2 = Min_Matching(A, B, i+1, temp)
-      if temp2 is not None:
-        temp2.insert(0, this)
-        pesos.append(temp2)
-      temp += 1
+    match = Min_Matching_Recursive(A[:i], B[:j])
+    match.append((A[i], B[j]))
+    pesos.append(match)
+    for it in range(1, i):
+      matches = Min_Matching_Recursive(A[:it], B[:j])
+      match = ([], B[j])
+      for elm in range(it, i+1):
+        match[0].append(A[elm])
+      matches.append(match)
+      pesos.append(matches)
+    for it in range(1, j):
+      matches = Min_Matching_Recursive(A[:i], B[:it])
+      match = (A[i], [])
+      for elm in range(it, j+1):
+        match[1].append(B[elm])
+      matches.append(match)
+      pesos.append(matches)
     return minsum(pesos)
