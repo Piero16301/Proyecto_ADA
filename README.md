@@ -1,2 +1,2 @@
-# Proyecto_ADA
+# Proyecto ADA
 Proyecto de Análisis y Diseño de Algoritmos
