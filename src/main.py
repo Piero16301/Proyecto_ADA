@@ -4,10 +4,11 @@ from functions.greedy import Min_Matching_Greedy
 from functions.recursive import Min_Matching_Recursive, sum
 from functions.memorized import Min_Matching_Memorized, CleanMemoria
 
+
 def inputOpcion():
-    correcto=False
+    correcto = False
     num = 0
-    while(not correcto):
+    while not correcto:
         try:
             num = int(input("Introduce una opcion: "))
             correcto = True
@@ -15,17 +16,19 @@ def inputOpcion():
             print('Error, introduce un numero 1-4')
     return num
 
+
 def agregarVector():
     vector = []
-    n = int(input("Numero de elementos: ")) 
-    for i in range(0,n):
+    n = int(input("Numero de elementos: "))
+    for i in range(0, n):
         elemento = int(input())
         vector.append(elemento)
     return vector
- 
+
+
 salir = False
 opcion = 0
- 
+
 print("Ingrese los elementos de los vetores")
 A = agregarVector()
 B = agregarVector()
@@ -36,22 +39,22 @@ while not salir:
     print("2. Algoritmo Recursivo")
     print("3. Algoritmo Memoizado")
     print("4. Salir")
-     
+
     opcion = inputOpcion()
-  
+
     if opcion == 1:
         print("Algoritmo Greedy")
         A1 = converter(A)
         B1 = converter(B)
         resultado = Min_Matching_Greedy(A1, B1)
-        print("Match:",resultado[0])
-        print("Peso:",resultado[1])
+        print("Match:", resultado[0])
+        print("Peso:", resultado[1])
     elif opcion == 2:
         print("Algoritmo Recursivo")
         A1 = converter(A)
         B1 = converter(B)
         resultado = Min_Matching_Recursive(A1, B1)
-        print("Match:",resultado)
+        print("Match:", resultado)
         print("Peso:", sum(resultado))
     elif opcion == 3:
         print("Algoritmo Memoizado")
@@ -59,11 +62,11 @@ while not salir:
         B1 = converter(B)
         resultado = Min_Matching_Memorized(A1, B1)
         CleanMemoria()
-        print("Match:",resultado)
+        print("Match:", resultado)
         print("Peso:", sum(resultado))
     elif opcion == 4:
         salir = True
     else:
-        print ("Introduce un numero entre 1 y 4")
- 
-print ("Fin")
+        print("Introduce un numero entre 1 y 4")
+
+print("Fin")
