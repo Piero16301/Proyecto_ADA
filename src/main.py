@@ -36,10 +36,8 @@ while not salir:
     print("1. Algoritmo Greedy")
     print("2. Algoritmo Recursivo")
     print("3. Algoritmo Memoizado")
-    print("4. Salir")
-
-    print(A)
-    print(B)
+    print("4. Algoritmo Programación Dinámica")
+    print("5. Salir")
 
     opcion = inputOpcion()
 
@@ -66,6 +64,14 @@ while not salir:
         print("Match:", resultado)
         print("Peso:", sum(resultado))
     elif opcion == 4:
+        print("Algoritmo Programación Dinámica")
+        A1 = converter(A)
+        B1 = converter(B)
+        resultado = Min_Matching_Memorized(A1, B1)
+        CleanMemoria()
+        print("Match:", resultado)
+        print("Peso:", sum(resultado))
+    elif opcion == 5:
         salir = True
     else:
         print("Introduce un numero entre 1 y 4")
