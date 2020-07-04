@@ -1,35 +1,5 @@
 import numpy as np
 
-"""def MinMatching(A, B):
-    if len(A) > len(B):
-        if len(B) == 1:
-            return [(A, B[0])]
-        else:
-            temp = [(A[0], B[0])]
-            A.remove(A[0])
-            B.remove(B[0])
-            temp = temp + MinMatching(A, B)
-            return temp
-    else:
-        if len(A) == len(B):
-          if len(A) == 1:
-            return [(A[0], B[0])]
-          else:
-            temp = [(A[0], B[0])]
-            A.remove(A[0])
-            B.remove(B[0])
-            temp = temp + MinMatching(A, B)
-            return temp
-        else:
-          if len(A) == 1:
-              return [(A[0], B)]
-          else:
-              temp = [(A[0], B[0])]
-              A.remove(A[0])
-              B.remove(B[0])
-              temp = temp + MinMatching(A, B)
-              return temp"""
-
 
 def peso(match):
     if isinstance(match[0], int) and isinstance(match[1], int):
@@ -55,6 +25,37 @@ def sum(vec):
     for i in vec:
         result += peso(i)
     return result
+
+
+def MatchDefault(A, B):
+    if len(A) > len(B):
+        if len(B) == 1:
+            return [(A, B[0])]
+        else:
+            temp = [(A[0], B[0])]
+            A.remove(A[0])
+            B.remove(B[0])
+            temp = temp + MatchDefault(A, B)
+            return temp
+    else:
+        if len(A) == len(B):
+            if len(A) == 1:
+                return [(A[0], B[0])]
+            else:
+                temp = [(A[0], B[0])]
+                A.remove(A[0])
+                B.remove(B[0])
+                temp = temp + MatchDefault(A, B)
+                return temp
+        else:
+            if len(A) == 1:
+                return [(A[0], B)]
+            else:
+                temp = [(A[0], B[0])]
+                A.remove(A[0])
+                B.remove(B[0])
+                temp = temp + MatchDefault(A, B)
+                return temp
 
 
 def MatchMult3(A, B):
@@ -128,7 +129,9 @@ def MatchMult32(A, B):
 
 def Min_Matching_Greedy(A, B):
     result = list()
-    if len(A) == len(B):
+    if len(A) < 4 or len(B) < 4:
+        result = MatchDefault(A, B)
+    elif len(A) == len(B):
         if len(A) % 3 == 0:
             result = MatchMult3(A, B)
         elif len(A) % 3 == 1:
@@ -157,5 +160,5 @@ def Min_Matching_Greedy(A, B):
             else:
                 result = MatchMult32(A1, B1)
             t = B[len(A) - 1:len(B)]
-            result.append((A[len(A) - 1], (t)))
+            result.append((A[len(A) - 1], t))
     return [result, sum(result)]

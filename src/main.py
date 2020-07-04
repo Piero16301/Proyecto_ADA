@@ -17,21 +17,19 @@ def inputOpcion():
     return num
 
 
-def agregarVector():
-    vector = []
-    n = int(input("Numero de elementos: "))
-    for i in range(0, n):
-        elemento = int(input())
-        vector.append(elemento)
-    return vector
+def readVector(path):
+    file = open(path, "r")
+    newVector = [int(num) for num in file.read().split(',')]
+    return newVector
 
 
 salir = False
 opcion = 0
 
 print("Ingrese los elementos de los vetores")
-A = agregarVector()
-B = agregarVector()
+
+A = readVector("vectors/vectorA.txt")
+B = readVector("vectors/vectorB.txt")
 
 while not salir:
 
@@ -39,6 +37,9 @@ while not salir:
     print("2. Algoritmo Recursivo")
     print("3. Algoritmo Memoizado")
     print("4. Salir")
+
+    print(A)
+    print(B)
 
     opcion = inputOpcion()
 
