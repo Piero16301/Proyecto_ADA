@@ -1,10 +1,10 @@
 import unittest
 
-from functions.converter import converter
+from utils.vectorConverter import converter
 
-from functions.greedy import Min_Matching_Greedy
-from functions.recursive import Min_Matching_Recursive
-from functions.memorized import Min_Matching_Memorized, CleanMemoria
+from functionsVectors.matchGreedy import Min_Matching_Greedy
+from functionsVectors.matchRecursive import Min_Matching_Recursive
+from functionsVectors.matchMemorized import Min_Matching_Memorized, CleanMemoria
 
 
 class MinMatchProblems(unittest.TestCase):
@@ -17,9 +17,7 @@ class MinMatchProblems(unittest.TestCase):
         query1 = [3, 1, 2, 2, 3, 1]
         query2 = [2, 2, 5, 2]
         expectMatch = [(3, [2, 2]), ([1, 2], 5), ([2, 3, 1], 2)]
-        expectPeso = 4.35
-        self.assertEqual(Min_Matching_Greedy(query1, query2)[0], expectMatch)
-        self.assertEqual(Min_Matching_Greedy(query1, query2)[1], expectPeso)
+        self.assertEqual(Min_Matching_Greedy(query1, query2), expectMatch)
 
     def test_recursive(self):
         query1 = [1, 2, 3, 2, 1]

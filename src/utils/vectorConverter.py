@@ -1,4 +1,4 @@
-def converter(vec):
+def vectorConverter(vec):
     count = 0
     values = []
     for i in vec:

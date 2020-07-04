@@ -1,32 +1,6 @@
 import numpy as np
 
 
-def peso(match):
-    if isinstance(match[0], int) and isinstance(match[1], int):
-        return match[0] / match[1]
-    elif isinstance(match[0], int):
-        temp = match[0]
-        sum = 0
-        for i in match[1]:
-            sum += i
-        return temp / sum
-    else:
-        temp = match[1]
-        sum = 0
-        for i in match[0]:
-            sum += i
-        return sum / temp
-
-
-def sum(vec):
-    if len(vec) == 0:
-        return 0
-    result = 0
-    for i in vec:
-        result += peso(i)
-    return result
-
-
 def MatchDefault(A, B):
     if len(A) > len(B):
         if len(B) == 1:
@@ -161,4 +135,4 @@ def Min_Matching_Greedy(A, B):
                 result = MatchMult32(A1, B1)
             t = B[len(A) - 1:len(B)]
             result.append((A[len(A) - 1], t))
-    return [result, sum(result)]
+    return result
