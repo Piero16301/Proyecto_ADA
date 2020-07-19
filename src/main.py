@@ -7,7 +7,13 @@ from functionsVectors.matchRecursive import Min_Matching_Recursive, sum
 from functionsVectors.matchMemorized import Min_Matching_Memorized, CleanMemoria
 
 from functionsMatrix.transformationGreedy import Min_Transformation_Greedy
+from functionsImages.animation import *
+from functionsImages.conversion import *
 
+KRED = 0.2126
+KGREEN = 0.7152
+KBLUE = 0.0722
+UMBRAL = 30 #NORMAL_RANGE 60<UMBRAL<120 
 
 def inputOpcion():
     correcto = False
@@ -127,8 +133,10 @@ while not salir:
 
             if opcion == 1:
                 print("Transformación Greedy")
-                A1 = matrixConverter(matrixA)
-                B1 = matrixConverter(matrixB)
+                image1 = "functionsImages/Images/image1.png"
+                image2 = "functionsImages/Images/image2.png"
+                A1 = convertion_blak_white(image1,KRED,KGREEN,KBLUE,UMBRAL)
+                B1 = convertion_blak_white(image2,KRED,KGREEN,KBLUE,UMBRAL)
                 resultado = Min_Transformation_Greedy(A1, B1)
                 print("Transformacion:")
                 for i in range(len(resultado[0])):
@@ -139,10 +147,18 @@ while not salir:
 
             elif opcion == 3:
                 print("3. Lectura de Imágenes")
-
+                image1 = "functionsImages/Images/image2.png"
+                convert_and_show(image1,KRED,KGREEN,KBLUE,UMBRAL)
             elif opcion == 4:
                 print("4. Animación")
-
+                image1 = "images/imagen1"
+                image2 = "images/imagen2"
+                A1 = convertion_blak_white(image1,KRED,KGREEN,KBLUE,UMBRAL)
+                B1 = convertion_blak_white(image2,KRED,KGREEN,KBLUE,UMBRAL)
+                matching = Min_Transformation_Greedy(A1, B1)
+               #matching = Min_Transformation_PMin_DP(A1, B1)
+               #matching = Min_Transformation_PProm_DP(A1, B1)
+                animar_rgb(image1,image2,matching,KRED,KGREEN,KBLUE,UMBRAL)               
             elif opcion == 5:
                 print("5. Transformación Peso Promedio Mínimo DP")
 
