@@ -1,5 +1,6 @@
 from utils.vectorConverter import vectorConverter
 from utils.matrixConverter import matrixConverter
+from utils.matchConverter import matchConverter
 
 from functionsVectors.matchGreedy import Min_Matching_Greedy
 from functionsVectors.matchRecursive import Min_Matching_Recursive, sum
@@ -129,7 +130,9 @@ while not salir:
                 A1 = matrixConverter(matrixA)
                 B1 = matrixConverter(matrixB)
                 resultado = Min_Transformation_Greedy(A1, B1)
-                print("Transformation:", resultado[0])
+                print("Transformacion:")
+                for i in range(len(resultado[0])):
+                    print(matchConverter(resultado[0][i], matrixA[i], matrixB[i]))
                 print("Peso:", resultado[1])
             elif opcion == 2:
                 print("2. Transformación Peso Mínimo DP")
