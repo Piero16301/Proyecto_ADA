@@ -140,14 +140,14 @@ while not salir:
                 resultado = Min_Transformation_Greedy(A1, B1)
                 print("Transformacion:")
                 for i in range(len(resultado[0])):
-                    print(matchConverter(resultado[0][i], matrixA[i], matrixB[i]))
+                    print(matchConverter(resultado[0][i], A1[i], B1[i]))
                 print("Peso:", resultado[1])
             elif opcion == 2:
                 print("2. Transformación Peso Mínimo DP")
 
             elif opcion == 3:
                 print("3. Lectura de Imágenes")
-                image1 = "functionsImages/Images/image2.png"
+                image1 = "functionsImages/Images/image1.png"
                 convert_and_show(image1,KRED,KGREEN,KBLUE,UMBRAL)
             elif opcion == 4:
                 print("4. Animación")

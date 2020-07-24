@@ -41,14 +41,14 @@ def convertion_blak_white(image,r_1,g_1,b_1,umbral):
 def convertion_blak_white_from_RGB(image,r_1,g_1,b_1,umbral): #Pregunta 8 
     imag_rgb = image
     h,w,c = imag_rgb.shape 
-    image_bw = np.zeros((h,w))
+    image_bw = np.zeros([h,w])
     for i in range(h):
         for j in range(w): 
             valr=imag_rgb[i,j,0]
             valg=imag_rgb[i,j,1]
             valb=imag_rgb[i,j,2]
             var = r_1*float(valr)+g_1*float(valg)+b_1*float(valb)
-            if var>=umbral:
+            if var >= umbral:
                 image_bw[i,j] = 1                
     return image_bw    
 
