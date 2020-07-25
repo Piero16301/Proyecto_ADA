@@ -1,3 +1,7 @@
+from utils.matchConverter import matchConverter
+from utils.vectorConverter import vectorConverter
+
+
 def peso(match):
   if isinstance(match[0], int) and isinstance(match[1], int):
     return match[0]/match[1]
@@ -153,8 +157,8 @@ def dynamic_programming(A, B):
 def Min_Transformation_DP(A, B):
 	result = []
 	for i in range(len(A)):
-		A1 = converter(A[i])
-		B1 = converter(B[i])
+		A1 = vectorConverter(A[i])
+		B1 = vectorConverter(B[i])
 		MinMatch = dynamic_programming(A1, B1)
 		result.append(matchConverter(MinMatch, A[i], B[i]))
 	return result

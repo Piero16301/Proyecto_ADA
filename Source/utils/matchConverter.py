@@ -14,7 +14,10 @@ def obtenerIndice(fila, iterador):
                 final = i
                 break
         if i == len(fila)-1 and inicio != -1:
-	        final = len(fila)
+            final = len(fila)
+    if inicio == -1 or final == -1:
+        inicio = 0
+        final = 1
     return [inicio, final-1, final]
 
 

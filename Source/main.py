@@ -1,3 +1,5 @@
+from functionsMatrix.transformationDP import Min_Transformation_DP
+from functionsVectors.matchDP import dynamic_programming
 from utils.vectorConverter import vectorConverter
 from utils.matrixConverter import matrixConverter
 from utils.matchConverter import matchConverter
@@ -109,7 +111,7 @@ while not salir:
                 print("Algoritmo Programación Dinámica")
                 A1 = vectorConverter(vectorA)
                 B1 = vectorConverter(vectorB)
-                resultado = Min_Matching_Memorized(A1, B1)
+                resultado = dynamic_programming(A1, B1)
                 CleanMemoria()
                 print("Match:", resultado)
                 print("Peso:", sum(resultado))
@@ -131,14 +133,13 @@ while not salir:
 
             opcion = inputOpcion()
 
+            image1 = "functionsImages/Images/PS5.png"
+            image2 = "functionsImages/Images/XBOX.png"
+
             if opcion == 1:
                 print("Transformación Greedy")
-                image1 = "functionsImages/Images/PS5.png"
-                image2 = "functionsImages/Images/XBOX.png"
                 A1 = matrixConverter(convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL))
                 B1 = matrixConverter(convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL))
-                print(A1)
-                print(B1)
                 resultado = Min_Transformation_Greedy(A1, B1)
                 print("Transformacion:")
                 posiciones = list()
@@ -147,28 +148,34 @@ while not salir:
                 print(posiciones)
                 print("Peso:", resultado[1])
             elif opcion == 2:
-                print("2. Transformación Peso Mínimo DP")
-
+                print("Transformación Peso Mínimo DP")
+                A1 = convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL)
+                B1 = convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL)
+                resultado = Min_Transformation_DP(A1, B1)
+                print("Transformacion:")
+                print(resultado)
             elif opcion == 3:
-                print("3. Lectura de Imágenes")
+                print("Lectura de Imágenes")
                 image1 = "functionsImages/Images/LA.png"
                 convert_and_show(image1, KRED, KGREEN, KBLUE, UMBRAL)
             elif opcion == 4:
-                print("4. Animación")
-                image1 = "functionsImages/Images/LA.png"
-                image2 = "functionsImages/Images/NY.png"
-                A1 = convertion_blak_white(image1,KRED,KGREEN,KBLUE,UMBRAL)
-                B1 = convertion_blak_white(image2,KRED,KGREEN,KBLUE,UMBRAL)
+                print("Animación")
+                A1 = convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL)
+                B1 = convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL)
                 matching = Min_Transformation_Greedy(A1, B1)
                 posiciones = list()
                 for i in range(len(matching[0])):
                     posiciones.append(matchConverter(matching[0][i], A1[i], B1[i]))
-               #matching = Min_Transformation_PMin_DP(A1, B1)
-               #matching = Min_Transformation_PProm_DP(A1, B1)
-                animation_black_white(image1,image2,KRED,KGREEN,KBLUE,UMBRAL,posiciones)               
+                #matching = Min_Transformation_PMin_DP(A1, B1)
+                #matching = Min_Transformation_PProm_DP(A1, B1)
+                animation_black_white(image1, image2, KRED, KGREEN, KBLUE, UMBRAL, posiciones)
             elif opcion == 5:
                 print("5. Transformación Peso Promedio Mínimo DP")
-
+                A1 = convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL)
+                B1 = convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL)
+                resultado = Min_Transformation_DP(A1, B1)
+                print("Transformacion:")
+                print(resultado)
             elif opcion == 6:
                 salir = True
             else:
