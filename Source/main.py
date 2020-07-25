@@ -1,4 +1,5 @@
 from functionsMatrix.transformationDP import Min_Transformation_DP
+from functionsMatrix.MinTransformacionDPMejorado import Min_Transformation_DP_Mejorado
 from functionsVectors.matchDP import dynamic_programming
 from utils.vectorConverter import vectorConverter
 from utils.matrixConverter import matrixConverter
@@ -173,7 +174,7 @@ while not salir:
                 print("5. Transformación Peso Promedio Mínimo DP")
                 A1 = convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL)
                 B1 = convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL)
-                resultado = Min_Transformation_DP(A1, B1)
+                resultado = Min_Transformation_DP_Mejorado(A1, B1)
                 print("Transformacion:")
                 print(resultado)
             elif opcion == 6:
