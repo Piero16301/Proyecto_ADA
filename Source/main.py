@@ -171,7 +171,7 @@ while not salir:
                 #matching = Min_Transformation_PProm_DP(A1, B1)
                 animation_black_white(image1, image2, KRED, KGREEN, KBLUE, UMBRAL, posiciones)
             elif opcion == 5:
-                print("5. Transformación Peso Promedio Mínimo DP")
+                print("Transformación Peso Promedio Mínimo DP")
                 A1 = convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL)
                 B1 = convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL)
                 resultado = Min_Transformation_DP_Mejorado(A1, B1)
