@@ -155,14 +155,17 @@ while not salir:
                 convert_and_show(image1, KRED, KGREEN, KBLUE, UMBRAL)
             elif opcion == 4:
                 print("4. Animación")
-                image1 = "images/imagen1"
-                image2 = "images/imagen2"
+                image1 = "functionsImages/Images/LA.png"
+                image2 = "functionsImages/Images/NY.png"
                 A1 = convertion_blak_white(image1,KRED,KGREEN,KBLUE,UMBRAL)
                 B1 = convertion_blak_white(image2,KRED,KGREEN,KBLUE,UMBRAL)
                 matching = Min_Transformation_Greedy(A1, B1)
+                posiciones = list()
+                for i in range(len(matching[0])):
+                    posiciones.append(matchConverter(matching[0][i], A1[i], B1[i]))
                #matching = Min_Transformation_PMin_DP(A1, B1)
                #matching = Min_Transformation_PProm_DP(A1, B1)
-                animar_rgb(image1,image2,matching,KRED,KGREEN,KBLUE,UMBRAL)               
+                animation_black_white(image1,image2,KRED,KGREEN,KBLUE,UMBRAL,posiciones)               
             elif opcion == 5:
                 print("5. Transformación Peso Promedio Mínimo DP")
 
