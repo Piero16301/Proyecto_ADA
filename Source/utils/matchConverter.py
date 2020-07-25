@@ -1,8 +1,8 @@
 def obtenerIndice(fila, iterador):
-    inicio = 0
-    final = 0
+    inicio = -1
+    final = -1
     for i in range(iterador, len(fila)):
-        if inicio == 0:
+        if inicio == -1:
             if fila[i] == 1:
                 inicio = i
             else:
@@ -13,7 +13,9 @@ def obtenerIndice(fila, iterador):
             else:
                 final = i
                 break
-    return [inicio, final, final]
+        if i == len(fila)-1 and inicio != -1:
+	        final = len(fila)
+    return [inicio, final-1, final]
 
 
 def matchConverter(match, filaA, filaB):
