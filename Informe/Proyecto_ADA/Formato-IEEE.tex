@@ -13,6 +13,7 @@
 \usepackage{hyperref}
 \usepackage{appendix}
 \usetikzlibrary{automata,positioning}
+\graphicspath{ {./images/} }
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -90,12 +91,14 @@ El algoritmo para la conversión de vectores se muestra a continuación.
 \newpage
 
 \begin{algorithm}
-\caption{\textsc{Convert-Vector}}
+\caption{\textsc{Vector-Converter}}
+\algsetup{linenosize=\small}
+\scriptsize
 \begin{algorithmic}
 \REQUIRE Un arreglo $A$ de unos y ceros.
 \ENSURE Un arreglo $A'$ con la suma de unos para cada bloque.
 \begin{flushleft}
-\textsc{Convert-Vector}$(A)$
+\textsc{Vector-Converter}$(A)$
 \end{flushleft}
     \STATE $count=0$
     \STATE $values=[\emptyset]$
@@ -114,6 +117,7 @@ El algoritmo para la conversión de vectores se muestra a continuación.
     \ENDIF
     \RETURN $values$
 \end{algorithmic}
+\label{alg:vector-converter}
 \end{algorithm}
 
 Luego de realizar la conversión de vectores de unos y ceros en vectores de número enteros, se puede pasar a realizar el matching entre los dos nuevos vectores. El algoritmo para este matching se detalla como \textsc{Min-Matching}.\\\\
@@ -255,9 +259,7 @@ Por último, para el caso cuando el tamaño de los vectores es un múltiplo de $
     (q_7) edge node {} (q_15);
 \end{tikzpicture}
 \end{center}
-
-\newpage
-
+\verb||\\
 Ahora, para los casos en los que los vectores tienen diferentes tamaños, se debe hacer una división de ambos vectores hasta que tengan el tamaño del vector menor menos $1$. Así, tendríamos dos vectores del mismo tamaño que se puede procesar con cualquiera de las maneras ya mencionadas. Y para los nodos restantes, quedarían hacer una divisón si es que el tamaño original del vector $A$ es menor que el tamaño original de $B$, y un agrupamiento en caso contrario, como se muestra a continuación.\\
 \begin{center}
 \begin{tikzpicture}[shorten >= 1pt, node distance = 1.2cm, on grid, auto] 
@@ -286,6 +288,8 @@ El pseudocódigo de este algoritmo voraz para el problema se muestra en el algor
 
 \begin{algorithm}
 \caption{\textsc{Min-Matching-Voraz}}
+\algsetup{linenosize=\small}
+\scriptsize
 \begin{algorithmic}
 \REQUIRE Dos arreglos $A$ y $B$ con la suma de unos por bloque.
 \ENSURE Un matching entre $A$ y $B$, y su peso.
@@ -328,40 +332,37 @@ El pseudocódigo de este algoritmo voraz para el problema se muestra en el algor
             \STATE $result.add(A[A.length],t)$
         \ENDIF
     \ENDIF
+    \RETURN $result$
 \end{algorithmic}
+\label{alg:min-matching-voraz}
 \end{algorithm}
 
 \section{Pregunta 2: Recurrencia}
-Tenemos la siguiente recurrencia para el problema de \textsc{Min-Matching}.\\
+Tenemos la siguiente recurrencia para el problema de \textsc{Min-Matching}.
 \begin{center}
-$OPT(i,j)$
-\begin{math}
-  \resizebox{.8\hsize}{!}{
-  \left\{
-    \begin{array}{l}
-      \frac{A_i}{\sum _{k=1}^iB_k} \text{ for all } i=1\\\\
-      \frac{\sum _{k=1}^iA_k}{B_j} \text{ for all } j=1\\\\
-      min(min_{l=1}^{j-1}\{OPT(i-1,j-l)+\frac{A_i}{\sum _{k=j-l+1}^jB_k}\};\\
-      min_{l=1}^{i-1}\{OPT(i-l,j-1)+\frac{\sum _{k=i-l+1}^iA_k}{B_j}\}) \text{ otherwise}
-    \end{array}
-  \right.}
-\end{math}
+\[ OPT(i,j) =
+   \begin{cases}
+     \frac{A_i}{\sum _{k=1}^iB_k} & \text{para todo $i=1$} \\
+     \frac{\sum _{k=1}^iA_k}{B_j} & \text{para todo $j=1$} \\
+     min(min_{l=1}^{j-1}\{OPT(i-1, & \text{otro caso} \\
+     j-l)+\frac{A_i}{\sum _{k=j-l+1}^jB_k}\}; & \\
+     min_{l=1}^{i-1}\{OPT(i-l,j-1) & \\
+     +\frac{\sum _{k=i-l+1}^iA_k}{B_j}\}) &
+   \end{cases}
+\]
 \end{center}
 \section{Pregunta 3: Recursivo}
 \subsection{Recurrencia de complejidad}
 Tenemos la siguiente recurrencia de complejidad para el problema de \textsc{Min-Matching-Recursivo}.\\
 \begin{center}
-$C(m,n)$
-\begin{math}
-  \resizebox{.8\hsize}{!}{
-  \left\{
-    \begin{array}{l}
-      $2*c_1$ \text{ for all } i=2 j=2\\\\
-      C\left(m;n\right)=\sum _{n=1}^{n-1}C\left(m-1;n-h\right)+\\\\
-        \sum _{n=1}^{m-1}C\left(m-h;n-1\right)+\Omega \left(1\right) \text{ otherwise}
-    \end{array}
-  \right.}
-\end{math}
+\[ C(m,n) =
+   \begin{cases}
+     2*c_1 & \text{para todo $i=2$ \text{ó} $j=2$} \\\\
+     \sum _{n=1}^{n-1}C\left(m-1,n-h\right)+ & \text{otro caso} \\
+     \sum _{n=1}^{m-1}C\left(m-h,n-1\right)+ & \\
+     \Omega \left(1\right) & 
+   \end{cases}
+\]
 \end{center}
 
 \subsection{Demostración de complejidad}
@@ -390,8 +391,6 @@ $k=2\:\wedge \:C=1$\\
    C\left(m;n\right)&=\Omega \left(2^r\right)
 \end{align*}
 
-\newpage
-
 Por hipótesis inductiva, tenemos:\\\\
 $C\left(m;n\right)\ge 2\cdot C\left(m-1;n-1\right)$\\\\
 $2^r\cdot K\ge 2\cdot 2^{r-1}\cdot K_1$\\\\
@@ -402,6 +401,8 @@ $C\left(m;n\right)=\Omega \:\left(2^{max\left\{m,n\right\}}\right);\:m\:\wedge \
 Para resolver el problema de \textsc{Min-Matching} se ha planteado el siguiente pseudocódigo.
 \begin{algorithm}
 \caption{\textsc{Min-Matching-Recursivo}}
+\algsetup{linenosize=\small}
+\scriptsize
 \begin{algorithmic}
 \REQUIRE Dos arreglos $A$ y $B$ con la suma de unos por bloque.
 \ENSURE Un matching entre $A$ y $B$, y su peso.
@@ -452,6 +453,7 @@ Para resolver el problema de \textsc{Min-Matching} se ha planteado el siguiente 
     \RETURN $min(pesos)$
     \ENDIF
 \end{algorithmic}
+\label{alg:min-matching-recursivo}
 \end{algorithm}
 \verb| |\\
 \section{Pregunta 4: Memorizado}
@@ -460,36 +462,36 @@ Para resolver el problema de \textsc{Min-Matching} se ha planteado el siguiente 
 
 \begin{center}
     \begin{forest}
-for tree={l sep-=.7em,l=0},
-[\scalebox{0.7}{
+for tree={l sep-=.2em,l=0},
+[\scalebox{0.6}{
 $\begin{array}{c}
 M(m,n)
 \end{array}$}
- [\scalebox{0.7}{
+ [\scalebox{0.6}{
 $\begin{array}{c}
 min(m-1,n'-1)
 \end{array}$}
-  [\scalebox{0.7}{
+  [\scalebox{0.6}{
 $\begin{array}{c}
 M(m-1,1) \text{...}
 \end{array}$}
   ]
-  [\scalebox{0.7}{
+  [\scalebox{0.6}{
 $\begin{array}{c}
 \text{...} M(m-1,n-1)
 \end{array}$}
   ]
  ]
- [\scalebox{0.7}{
+ [\scalebox{0.6}{
 $\begin{array}{c}
 min(m'-1,n-1)
 \end{array}$}
-  [\scalebox{0.7}{
+  [\scalebox{0.6}{
 $\begin{array}{c}
 M(1,n-1) \text{...}
 \end{array}$}
   ]
-  [\scalebox{0.7}{
+  [\scalebox{0.6}{
 $\begin{array}{c}
 \text{...} M(m-1,n-1)
 \end{array}$}
@@ -503,17 +505,17 @@ $\begin{array}{c}
 \end{align*}
 \begin{FlushRight}
     \begin{forest}
-for tree={l sep-=.7em,l=0},
-[\scalebox{0.7}{
+for tree={l sep-=.2em,l=0},
+[\scalebox{0.6}{
 $\begin{array}{c}
 M(m-(n-1),1)
 \end{array}$}
- [\scalebox{0.7}{
+ [\scalebox{0.6}{
 $\begin{array}{c}
 M(1,1) \text{...}
 \end{array}$}
  ]
- [\scalebox{0.7}{
+ [\scalebox{0.6}{
 $\begin{array}{c}
 \text{...} M(m-n+1,1)
 \end{array}$}
@@ -525,17 +527,13 @@ $\begin{array}{c}
 \subsection{Recurrencia de complejidad}
 Tenemos la siguiente recurrencia para el problema de \textsc{Min-Matching-Memorizado}.\\
 \begin{center}
-$C(m,n)$
-\begin{math}
-  \resizebox{.8\hsize}{!}{
-  \left\{
-    \begin{array}{l}
-      c_1*n \text{ for all } i=1\\\\
-      c_1*m \text{ for all } j=1\\\\
-      C(m-1,n-1) + k(n-2)+d \text{  otherwise} 
-    \end{array}
-  \right.}
-\end{math}
+\[ C(m,n) =
+   \begin{cases}
+     c_1*n & \text{para todo $i=1$} \\
+     c_1*m & \text{para todo $j=1$} \\
+     C(m-1,n-1)+k(n-2)+d & \text{otro caso}
+   \end{cases}
+\]
 \end{center}
 
 \subsection{Demostración de complejidad}
@@ -565,6 +563,8 @@ Faltaría demostrar que $(n-1)km = O(m*n)$\\
 
 \begin{algorithm}
 \caption{\textsc{Min-Matching-Memoizado}}
+\algsetup{linenosize=\small}
+\scriptsize
 \begin{algorithmic}
 \REQUIRE Dos arreglos $A$ y $B$ con la suma de unos por bloque.
 \ENSURE Un matching entre $A$ y $B$, y su peso.
@@ -592,7 +592,7 @@ Faltaría demostrar que $(n-1)km = O(m*n)$\\
     \ELSE
         \IF{$memoria.get(i)$}
             \IF{$memoria[i].get(j)$}
-                return $memoria[i][j]$
+                \RETURN $memoria[i][j]$
             \ENDIF
         \ENDIF
         \STATE $pesos=\emptyset$
@@ -627,13 +627,153 @@ Faltaría demostrar que $(n-1)km = O(m*n)$\\
         \RETURN $memoria[i][j]$
     \ENDIF
 \end{algorithmic}
+\label{alg:min-matching-memoizado}
 \end{algorithm}
+\verb||\\
+\section{Pregunta 5: Programación Dinámica}
+Parte de André xD
+\verb||\\
+
+\section{Transformación de imágenes}
+Dadas dos matrices $A[1...p, 1...q]$, $B[1...p,1...q]$ de ceros y unos, una \textit{transformación} de $A$ en $B$ es un conjunto $M=\{M_1,M_2,...,M_p\}$, donde cada $M_i$ es un matching entre los vectores $A[i]$ y $B[i]$. El peso de $M$, denotado por $w(M)$ es igual a la suma de pesos de cada $M_i$ es decir, de acuerdo a lo siguiente.
+
+$$w(M)=\sum _{i=1}^nw\left(M_i\right)$$
+
+\subsection{Problema Min-Transformacion}
+Dadas dos matrices $A$ y $B$ de ceros y unos, encontrar una transformación entre $A$ y $B$ de peso mínimo.
+
+Es claro que para resolver el problema \textsc{Min-Transformacion} de manera óptima basta invocar varias veces a alguna de las subrutinas implementadas en la sección anterior.
+
+\section{Pregunta 6: Transformación Voráz}
+Analise, diseñe e implemente un algoritmo voráz con complejidad cuadrática para el problema \textsc{Min-Transformacion}. Su algoritmo no deberá encontrar necesariamente la transformación de peso mínimo. Debe usar como subrutina al algoritmo implementado en la Pregunta 1.\\\\
+\textit{Entrada del algoritmo}: Dos matrices $A$ y $B$ de ceros y unos de tamaño $p \times q$.\\\\
+\textit{Salida del algoritmo}: Una transformación entre $A$ y $B$, no necesariamente óptima, y su peso.\\\\
+\textit{Tiempo de ejecución del algoritmo}: $O(pq)$\\\\
+Para el planteamiento de la solución voráz a este problema, primero se ha realizado una llamada iterativa al Algoritmo \ref{alg:vector-converter} para realizar la conversión de una matriz de unos y ceros a una matriz de pesos de los bloques (números enteros). Entonces, a partir de esto se puede construir este nuevo algoritmo.
+
+\begin{algorithm}
+\caption{\textsc{Matrix-Converter}}
+\algsetup{linenosize=\small}
+\scriptsize
+\begin{algorithmic}
+\REQUIRE Una matriz $A$ de unos y ceros.
+\ENSURE Una matriz $A'$ con la suma de unos para cada bloque.
+\begin{flushleft}
+\textsc{Matrix-Converter}$(A)$
+\end{flushleft}
+    \STATE $resultado=\emptyset$
+    \FOR{$row$ in  $A$}
+        \STATE $resultado=resultado \cup \textsc{Vector-Converter}(row)$
+    \ENDFOR
+    \RETURN $resultado$
+\end{algorithmic}
+\label{alg:matrix-converter}
+\end{algorithm}
+\verb||\\
+Ahora, se ha planteado como solución para el problema de \textit{Min-Transformación} llamar de forma iterativa al Algoritmo \ref{alg:min-matching-voraz} para cada fila de las matrices. Como dice el planteamiento del problema, se debe de hacer un \textsc{Match} entre las filas de ambas matrices, y el índice de la fila sea el mismo en ambas. A partir de esto, se ha planteado el siguiente algoritmo.
+
+\begin{algorithm}
+\caption{\textsc{Min-Transformacion-Voraz}}
+\algsetup{linenosize=\small}
+\scriptsize
+\begin{algorithmic}
+\REQUIRE Dos matrices $A$ y $B$ con la suma de unos por bloque.
+\ENSURE Una transformación entre $A$ y $B$, y su peso.
+\begin{flushleft}
+\textsc{Min-Transformacion-Voraz}$(A,B)$
+\end{flushleft}
+    \STATE $resultado=\emptyset$
+    \STATE $peso=0$
+    \FOR{$i=0$ to $A.rows$}
+        \STATE $resultado=resultado$ $\cup$ $\textsc{Min-Matching-Voraz}(A[i],B[i])$
+    \ENDFOR
+    \FOR{$i=0$ to $resultado.size$}
+        \STATE $peso=peso+\textsc{Sum}(resultado[i])$
+    \ENDFOR
+    \RETURN $[resultado,peso]$
+\end{algorithmic}
+\label{alg:min-transformacion-voraz}
+\end{algorithm}
+\verb||\\
+Para poder calcular la suma de los \textit{match} de cada fila, se ha creado una función, la cual se muestra a continuación.
+
+\begin{algorithm}
+\caption{\textsc{Sum}}
+\algsetup{linenosize=\small}
+\scriptsize
+\begin{algorithmic}
+\REQUIRE Un \textit{match} entre dos arreglos.
+\ENSURE El peso del \textit{match} inicial.
+\begin{flushleft}
+\textsc{Sum}$(match)$
+\end{flushleft}
+    \IF{$match.length=0$}
+        \RETURN $0$
+    \ENDIF
+    \STATE $resultado=0$
+    \FOR{$i$ in $match$}
+        \STATE $resultado=resultado+peso(i)$
+    \ENDFOR
+    \RETURN $resultado$
+\end{algorithmic}
+\label{alg:sum}
+\end{algorithm}
+
+\section{Pregunta 7: Transformación Prog. Dinámica}
+
+\section{Pregunta 8: Lectura de Imágenes}
+La motivación de hacer transformación de una matriz hacia otra es poder transformar
+una imagen en otra mediante una curva suave. Una manera de hacerlo es codificar cada pixel como un 0 o un 1. Para ello, puede tomar cada pixel en la escala RGB (r, g, b) y transformarlo a una escala de grises, para posteriormente escoger los que están más cerca de ser pixeles blancos (0) y los que están más cerca de ser negros (1). Existen muchos métodos para hacer esta transformación, dependiendo de los coeficientes escogidos.\\
+
+Las fórmulas correspondientes para realizar esta conversión, puede ser con Rec. 601 Luma, la cual puede ser calculada con cualquiera de las siguientes fórmulas.
+
+\begin{equation}
+    Y'_{601}=0.299R'+0.587G'+0.114B'
+\end{equation}
+
+\begin{equation}
+    Y'_{709}=0.2126R'+0.7152G'+0.0722B'
+\end{equation}
+
+\begin{equation}
+    Y'_{240}=0.212R'+0.701G'+0.087B'
+\end{equation}
+
+Aplicando estas fórmulas, se consigue construir una matriz nueva en escala de grises. Es decir, se ha realizado una transformación de $R^3$ a $R^2$. El proceso de transformación de esta matriz, sigue la siguiente forma.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{images/matriz_grises.png}
+  \caption[Grises]{Transformación de matrices RGB en matriz de escala de grises}
+  \label{fig:grises}
+\end{figure}
+
+Finalmente, para convertirlo a una matriz de unos y ceros, se define un umbral, para que se defina para cada casilla de la matriz de escala de grises, si esta se va a convertir en 1 o 0, como se muestra a continuación.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{images/matriz_negro.png}
+  \caption[Negro]{Transformación de matriz de escala de grises en matriz de 1's y 0's}
+  \label{fig:negro}
+\end{figure}
+
+\section{Pregunta 9: Animación}
+Se va a implementar una animación que va a mostrar el proceso de transformación de una imagen en otra usando los algoritmos de transformación \textsc{Voráz}, \textsc{
+Prog. Dinámica} y \textsc{Prog. Dinámica Mejorada}.
+
+Para construir la animación, va a ser necesario crear imágenes intermedias que van a mostrar un pequeño cambio cuando se va a ir pasando de una en una. De esta manera, cuando se reproduzcan de manera rápida, se va a poder visualizar en forma de animación. Para la construcción de estas imágenes intermedias, se van a tener en cuenta los siguientes casos.
+
+\subsection{Composición}
+Cuando se tiene una composición en una transformación, lo que se tiene que hacer es calcular la cantidad de píxeles que se van a ir moviendo por cada imagen intermedia.
+
+Para este caso, se debe realizar el cálculo de cuantas imágenes intermedias se van a querer generar, así como también, el tamaño de los bloques de unos de ambas matrices para saber qué cantidad de píxeles se van a convertir en la imagen resultante. Este proceso se puede ver en la siguiente imagen.
 
 \renewcommand{\appendixname}{Anexos}
 \renewcommand{\appendixtocname}{Anexos}
 \renewcommand{\appendixpagename}{Anexos}
 
 \appendix
+\verb||\\
 Link repositorio GitHub: \href{https://github.com/Piero16301/Proyecto_ADA.git}{\underline{Proyecto ADA}}
 
 \end{document}
