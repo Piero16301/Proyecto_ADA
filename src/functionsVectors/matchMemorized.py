@@ -11,10 +11,8 @@ def peso(match):
     else:
         temp = match[1]
         sum = 0
-        for i in range(np.shape(match[0])[1]):
-            sum += match[0][i]
-        #for i in match[0]:
-        #    sum += i
+        for i in match[0]:
+            sum += i
         return sum / temp
 
 
@@ -24,10 +22,9 @@ def sum(vec):
     result = 0
     print(vec)
     print(np.shape(vec));
-    for i in range(np.shape(vec)[1]):
-        result += peso(vec[i])
-    #for i in np.nditer(vec):
-    #    result += peso(i)
+
+    for i in vec:
+        result += peso(i)
     return result
 
 

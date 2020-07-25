@@ -27,7 +27,7 @@ def convertion_gris(nombre_de_imagen,r_1,g_1,b_1):
 def convertion_blak_white(image,r_1,g_1,b_1,umbral):
     imag_rgb = get_matrix_rgb(image)
     h,w,c = imag_rgb.shape 
-    image_bw = np.zeros((h,w))
+    image_bw = np.zeros((h,w),dtype = int)
     for i in range(h):
         for j in range(w): 
             valr=imag_rgb[i,j,0]
