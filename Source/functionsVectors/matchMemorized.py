@@ -20,9 +20,6 @@ def sum(vec):
     if len(vec) == 0:
         return 0
     result = 0
-    print(vec)
-    print(np.shape(vec));
-
     for i in vec:
         result += peso(i)
     return result

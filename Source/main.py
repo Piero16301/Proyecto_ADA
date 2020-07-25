@@ -133,14 +133,18 @@ while not salir:
 
             if opcion == 1:
                 print("Transformación Greedy")
-                image1 = "functionsImages/Images/image1.png"
-                image2 = "functionsImages/Images/image2.png"
-                A1 = convertion_blak_white(image1,KRED,KGREEN,KBLUE,UMBRAL)
-                B1 = convertion_blak_white(image2,KRED,KGREEN,KBLUE,UMBRAL)
+                image1 = "functionsImages/Images/PS5.png"
+                image2 = "functionsImages/Images/XBOX.png"
+                A1 = matrixConverter(convertion_blak_white(image1, KRED, KGREEN, KBLUE, UMBRAL))
+                B1 = matrixConverter(convertion_blak_white(image2, KRED, KGREEN, KBLUE, UMBRAL))
+                print(A1)
+                print(B1)
                 resultado = Min_Transformation_Greedy(A1, B1)
                 print("Transformacion:")
+                posiciones = list()
                 for i in range(len(resultado[0])):
-                    print(matchConverter(resultado[0][i], A1[i], B1[i]))
+                    posiciones.append(matchConverter(resultado[0][i], A1[i], B1[i]))
+                print(posiciones)
                 print("Peso:", resultado[1])
             elif opcion == 2:
                 print("2. Transformación Peso Mínimo DP")

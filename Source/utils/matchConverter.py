@@ -1,4 +1,3 @@
-import numpy as np
 def obtenerIndice(fila, iterador):
     inicio = 0
     final = 0
@@ -14,14 +13,14 @@ def obtenerIndice(fila, iterador):
             else:
                 final = i
                 break
-    return [inicio, final - 1, final]
+    return [inicio, final, final]
 
 
 def matchConverter(match, filaA, filaB):
     iteradorA = 0
     iteradorB = 0
     resultado = []
-    for i in np.nditer(match):
+    for i in match:
         resultadoA = []
         resultadoB = []
         if isinstance(i[0], int):
