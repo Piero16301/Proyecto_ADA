@@ -631,8 +631,15 @@ Faltaría demostrar que $(n-1)km = O(m*n)$\\
 \end{algorithm}
 \verb||\\
 \section{Pregunta 5: Programación Dinámica}
-Parte de André xD
-\verb||\\
+El algoritmo en Programación Dinámica esta basado en el Memorizado principalmente, al ser este muy largo optamos por no colocarlo aquí, sin embargo se puede visualizar en el \href{https://github.com/Piero16301/Proyecto_ADA/blob/master/Source/functionsVectors/matchDP.py}{\textbf{siguiente enlace}}. En este algoritmo se utilizan variables que actúan tanto como stacks como contadores, entre estas están:
+\begin{itemize}
+    \item \textbf{min}: Aquí se almacena el match mínimo, este va actualizándose conforme se vayan descubriendo nuevos matches
+    \item \textbf{mem}: Aquí se almacena la matriz de memoria, esta crece conforme se van descubriendo nuevos matches
+    \item \textbf{actual}: Esta variable actúa como stack en donde se van formando los distintos matches, cuando esta completo, si es que su valor total es menor que el mínimo actual, esta se vuelve el mínimo actual
+    \item \textbf{counters}: Aquí almacenamos un stack de contadores que se encarga de actualizar en tiempo real las combinaciones de configuraciones posibles dentro de un match
+    \item \textbf{possible\_values}: Aquí almacenamos un stack que va sincronizado con counters y que se encarga de ir guardando los matches que sirven para buscar el mínimo en su nivel que a su vez ayuden a formar la memoria
+    \item \textbf{i, j}: Aquí se almacenan las posiciones en el primer y segundo vector
+\end{itemize}% YAY :D
 
 \section{Transformación de imágenes}
 Dadas dos matrices $A[1...p, 1...q]$, $B[1...p,1...q]$ de ceros y unos, una \textit{transformación} de $A$ en $B$ es un conjunto $M=\{M_1,M_2,...,M_p\}$, donde cada $M_i$ es un matching entre los vectores $A[i]$ y $B[i]$. El peso de $M$, denotado por $w(M)$ es igual a la suma de pesos de cada $M_i$ es decir, de acuerdo a lo siguiente.
@@ -720,6 +727,30 @@ Para poder calcular la suma de los \textit{match} de cada fila, se ha creado una
 \end{algorithm}
 
 \section{Pregunta 7: Transformación Prog. Dinámica}
+Para la transformacion de Programacion Dinamica se aplico la misma estrategis vista previamente simplemente reemplazando la funcion que haya los matchings.
+
+\begin{algorithm}
+\caption{\textsc{Min-Transformacion-Dinamico}}
+\algsetup{linenosize=\small}
+\scriptsize
+\begin{algorithmic}
+\REQUIRE Dos matrices $A$ y $B$ con la suma de unos por bloque.
+\ENSURE Una transformación entre $A$ y $B$, y su peso.
+\begin{flushleft}
+\textsc{Min-Transformacion-Dinamico}$(A,B)$
+\end{flushleft}
+    \STATE $resultado=\emptyset$
+    \STATE $peso=0$
+    \FOR{$i=0$ to $A.rows$}
+        \STATE $resultado=resultado$ $\cup$ $\textsc{Min-Matching-Dinamico}(A[i],B[i])$
+    \ENDFOR
+    \FOR{$i=0$ to $resultado.size$}
+        \STATE $peso=peso+\textsc{Sum}(resultado[i])$
+    \ENDFOR
+    \RETURN $[resultado,peso]$
+\end{algorithmic}
+\label{alg:min-transformacion-dinamico}
+\end{algorithm}
 
 \section{Pregunta 8: Lectura de Imágenes}
 La motivación de hacer transformación de una matriz hacia otra es poder transformar
@@ -760,13 +791,89 @@ Finalmente, para convertirlo a una matriz de unos y ceros, se define un umbral, 
 \section{Pregunta 9: Animación}
 Se va a implementar una animación que va a mostrar el proceso de transformación de una imagen en otra usando los algoritmos de transformación \textsc{Voráz}, \textsc{
 Prog. Dinámica} y \textsc{Prog. Dinámica Mejorada}.
-
+\verb||\\\\
 Para construir la animación, va a ser necesario crear imágenes intermedias que van a mostrar un pequeño cambio cuando se va a ir pasando de una en una. De esta manera, cuando se reproduzcan de manera rápida, se va a poder visualizar en forma de animación. Para la construcción de estas imágenes intermedias, se van a tener en cuenta los siguientes casos.
 
-\subsection{Composición}
-Cuando se tiene una composición en una transformación, lo que se tiene que hacer es calcular la cantidad de píxeles que se van a ir moviendo por cada imagen intermedia.
-
+\subsection{Agrupación}
+Cuando se tiene una agrupación en una transformación, lo que se tiene que hacer es calcular la cantidad de píxeles que se van a ir moviendo por cada imagen intermedia.
+\verb||\\\\
 Para este caso, se debe realizar el cálculo de cuantas imágenes intermedias se van a querer generar, así como también, el tamaño de los bloques de unos de ambas matrices para saber qué cantidad de píxeles se van a convertir en la imagen resultante. Este proceso se puede ver en la siguiente imagen.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{images/agrupacion.png}
+  \caption[agrupacion]{Creación de imágenes intermedias para una agrupación}
+  \label{fig:agrupacion}
+\end{figure}
+
+\subsection{División}
+Cuando se tiene una división en una transformación, lo que se tiene que hacer es calcular la cantidad de píxeles que se van a ir moviendo por cada imagen intermedia.
+\verb||\\\\
+Para este caso, se debe realizar el cálculo de cuantas imágenes intermedias se van a querer generar, así como también, el tamaño de los bloques de unos de ambas matrices para saber qué cantidad de píxeles se van a convertir en la imagen resultante. Este proceso se puede ver en la siguiente imagen.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{images/division.png}
+  \caption[division]{Creación de imágenes intermedias para una división}
+  \label{fig:division}
+\end{figure}
+
+\section{Pregunta 10: Dinámica Mejorada}
+
+\begin{algorithm}
+\caption{\textsc{Min-Transformacion-Mejorado}}
+\algsetup{linenosize=\small}
+\scriptsize
+\begin{algorithmic}
+\REQUIRE Dos matrices $A$ y $B$ con la suma de unos por bloque.
+\ENSURE Una transformación entre $A$ y $B$, y su peso.
+\begin{flushleft}
+\textsc{Min-Transformacion-Dinamico-Mejorado}$(A,B)$
+\end{flushleft}
+    \STATE $resultado=\emptyset$
+    \STATE $peso=0$
+    \FOR{$i=0$ to $A.rows$}
+        \STATE $resultado=resultado$ $\cup$ $\textsc{Min-Matching-Mejorado}(A[i],B[i])$
+    \ENDFOR
+    \FOR{$i=0$ to $resultado.size$}
+        \STATE $peso=peso+\textsc{Sum}(resultado[i])$
+    \ENDFOR
+    \RETURN $[resultado,peso]$
+\end{algorithmic}
+\label{alg:min-transformacion-dinamico-mejorado}
+\end{algorithm}
+
+La mayor diferencia respecto a el dinámico normal fue la variación de nuestra función de peso la cual ahora recibía también el valor $u$ como parámetro el cual se hallaria dentro de nuestra función dinámica mejorada
+\begin{algorithm}
+\caption{\textsc{Peso}}
+\algsetup{linenosize=\small}
+\scriptsize
+\begin{algorithmic}
+\REQUIRE Una configuración dentro de un match y el valor $u$
+\ENSURE El valor de la configuracion de el match
+\begin{flushleft}
+\textsc{Peso}$(conf, u)$
+\end{flushleft}
+    \IF{isinstance($conf[0]$, int) \AND isinstance($conf[1]$, int)}
+        \RETURN abs($conf[0]/conf[1] - u$)
+    \ELSIF{isinstance($conf[0]$, int)}
+        \STATE $temp$ = $conf[0]$
+        \STATE $sum$ = $0$
+        \FOR{i = 0 to len($conf[1]$)}
+            \STATE $sum$ = $sum$ + $conf[1][i]$
+        \ENDFOR
+        \RETURN abs($temp/sum - u$)
+    \ELSE
+        \STATE $temp$ = $conf[1]$
+        \STATE $sum$ = $0$
+        \FOR{i = 0 to len($conf[0]$)}
+            \STATE $sum$ = $sum$ + $conf[1][i]$
+        \ENDFOR
+        \RETURN abs($sum/temp - u$)
+    \ENDIF
+\end{algorithmic}
+\label{alg:min-transformacion-peso}
+\end{algorithm}
 
 \renewcommand{\appendixname}{Anexos}
 \renewcommand{\appendixtocname}{Anexos}
