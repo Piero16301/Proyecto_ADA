@@ -13,7 +13,7 @@ from functionsImages.conversion import *
 KRED = 0.2126
 KGREEN = 0.7152
 KBLUE = 0.0722
-UMBRAL = 30 #NORMAL_RANGE 60<UMBRAL<120 
+UMBRAL = 50 #NORMAL_RANGE 60<UMBRAL<120
 
 def inputOpcion():
     correcto = False
@@ -151,8 +151,8 @@ while not salir:
 
             elif opcion == 3:
                 print("3. Lectura de Imágenes")
-                image1 = "functionsImages/Images/image1.png"
-                convert_and_show(image1,KRED,KGREEN,KBLUE,UMBRAL)
+                image1 = "functionsImages/Images/LA.png"
+                convert_and_show(image1, KRED, KGREEN, KBLUE, UMBRAL)
             elif opcion == 4:
                 print("4. Animación")
                 image1 = "images/imagen1"

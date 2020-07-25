@@ -68,5 +68,5 @@ def mostrar_imagen_de_array(imagen):
 
 
 def convert_and_show(image, k_r, k_g, k_b, umbral):
-    imagen_bw = convertion_blak_white(image, k_r, k_g, k_b, umbral);
-    mostrar_imagen_de_array(imagen_bw);
+    imagen_bw = convertion_blak_white(image, k_r, k_g, k_b, umbral)
+    mostrar_imagen_de_array(imagen_bw)
